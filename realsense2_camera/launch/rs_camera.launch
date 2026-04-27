@@ -14,8 +14,8 @@
   <arg name="fisheye_height"      default="-1"/>
   <arg name="enable_fisheye"      default="false"/>
 
-  <arg name="depth_width"         default="-1"/>
-  <arg name="depth_height"        default="-1"/>
+  <arg name="depth_width"         default="424"/>
+  <arg name="depth_height"        default="240"/>
   <arg name="enable_depth"        default="true"/>
 
   <arg name="confidence_width"    default="-1"/>
@@ -32,10 +32,10 @@
 
   <arg name="color_width"         default="-1"/>
   <arg name="color_height"        default="-1"/>
-  <arg name="enable_color"        default="true"/>
+  <arg name="enable_color"        default="false"/>
 
   <arg name="fisheye_fps"         default="-1"/>
-  <arg name="depth_fps"           default="-1"/>
+  <arg name="depth_fps"           default="15"/>
   <arg name="infra_fps"           default="30"/>
   <arg name="color_fps"           default="-1"/>
   <arg name="gyro_fps"            default="-1"/>
@@ -43,7 +43,7 @@
   <arg name="enable_gyro"         default="false"/>
   <arg name="enable_accel"        default="false"/>
 
-  <arg name="enable_pointcloud"         default="false"/>
+  <arg name="enable_pointcloud"         default="true"/>
   <arg name="pointcloud_texture_stream" default="RS2_STREAM_COLOR"/>
   <arg name="pointcloud_texture_index"  default="0"/>
   <arg name="allow_no_texture_points"   default="false"/>
@@ -70,8 +70,10 @@
   <arg name="stereo_module/gain/1"      default="16"/>
   <arg name="stereo_module/exposure/2"  default="1"/>
   <arg name="stereo_module/gain/2"      default="16"/>
-  
-  
+
+  <node pkg="tf2_ros" type="static_transform_publisher"
+      name="base_to_camera_link"
+      args="-0.0175 0.0 -0.0706 1.5708 1.5708 0 base_link $(arg camera)_link"/>  
 
   <group ns="$(arg camera)">
     <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
