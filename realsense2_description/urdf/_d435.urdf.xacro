@@ -12,6 +12,7 @@ aluminum peripherial evaluation case.
   <!-- Includes -->
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.gazebo.xacro"/>
 
   <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true">
     <xacro:property name="M_PI" value="3.1415926535897931" />
@@ -73,12 +74,12 @@ aluminum peripherial evaluation case.
           <material name="aluminum"/>
         </xacro:unless>     
       </visual>
-      <collision>
+      <!-- <collision>
         <origin xyz="0 ${-d435_cam_depth_py} 0" rpy="0 0 0"/>
         <geometry>
           <box size="${d435_cam_depth} ${d435_cam_width} ${d435_cam_height}"/>
         </geometry>
-      </collision>
+      </collision> -->
       <inertial>
         <!-- The following are not reliable values, and should not be used for modeling -->
         <mass value="0.072" />
@@ -148,6 +149,7 @@ aluminum peripherial evaluation case.
         <child link="${name}_color_optical_frame" />
       </joint>
       <link name="${name}_color_optical_frame"/>
+
     </xacro:if>
 
     <xacro:if value="${add_plug}">
@@ -155,5 +157,16 @@ aluminum peripherial evaluation case.
         <origin xyz="${d435_cam_mount_from_center_offset - 0.02095} ${-d435_cam_depth_py - 0.0353} 0" rpy="0 0 0"/>
       </xacro:usb_plug>
     </xacro:if>
+
+    <xacro:gazebo_d435
+      camera_name="${name}"
+      reference_link="${name}_link"
+      topics_ns="${name}"
+      depth_optical_frame="${name}_depth_optical_frame"
+      color_optical_frame="${name}_color_optical_frame"
+      infrared1_optical_frame="${name}_infra1_optical_frame"
+      infrared2_optical_frame="${name}_infra2_optical_frame"
+      publish_pointcloud="true" />
+
   </xacro:macro>
 </robot>
