@@ -73,7 +73,7 @@
 
   <node pkg="tf2_ros" type="static_transform_publisher"
       name="base_to_camera_link"
-      args="-0.0175 0.0 -0.0706 1.5708 1.5708 0 base_link $(arg camera)_link"/>  
+      args="0.015 0.0 -0.0706 1.5708 1.5708 3.1415926535897931 base_link $(arg camera)_link"/>  
 
   <group ns="$(arg camera)">
     <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
